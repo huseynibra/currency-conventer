@@ -27,6 +27,7 @@ btnsLeft.forEach(button => {
 
 
         getValue(baseCurrency, targetCurrency, inpt.value);
+
     });
 });
 
@@ -40,23 +41,23 @@ btnsRight.forEach(button => {
 
         this.classList.add('active');
 
+     
         getValue(baseCurrency, targetCurrency, inpt.value);
+       
     });
 });
 
 
 function getValue(baseCurrency, targetCurrency, amount) {
-
+    
     let requestURL = `https://api.exchangerate.host/convert?from=${baseCurrency}&to=${targetCurrency}`;
     let request = new XMLHttpRequest();
     request.open('GET', requestURL);
     request.responseType = 'json';
-    request.send();
-
+    request.send()
     request.onload = function () {
         let response = request.response;
         console.log(response);
-
 
         money_txt[0].innerText = `1 ${baseCurrency} = ${response.result} ${targetCurrency}`
         money_txt[1].innerText = `1 ${targetCurrency} = ${1 / response.result} ${baseCurrency}`
@@ -68,7 +69,9 @@ function getValue(baseCurrency, targetCurrency, amount) {
             money_target.innerText = amount * response.result
         }
     }
-
+    request.onerror = function() {
+        alert("Request failed");
+      };
 }
 
 
